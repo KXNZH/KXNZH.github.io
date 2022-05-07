@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,6 +145,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/07/Redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/07/Redux/" class="post-title-link" itemprop="url">Redux速成</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-07 00:00:00 / Modified: 17:43:25" itemprop="dateCreated datePublished" datetime="2022-05-07T00:00:00+08:00">2022-05-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<p>#Redux简介和使用场景<br>redux:一个专门做状态管理的JS库，可以集中式管理react应用中多个组件共享的状态<br>使用的两种情况：<br>(1)某个组件的状态，需要让其他组件可以随时拿到（共享）<br>(2)一个组件需要改变另一个组建的状态（通信）</p>
+<p>#Redux的工作流程<br><img src="https://s2.loli.net/2022/05/07/DlBxcEr1dw6vQWX.jpg" alt="FF25D33DCCF76F93DC85BAA5A3D44F54.png"></p>
+<p>我理解的：<br>React Components提要求告诉Action Creators，然后Action Creators把type和data告诉Store，Store知道后再把东西传给Reducers，Reducers加工完把新的state返给Store。</p>
+<p>Action Creators：核心是把获取到的东西包装成对象，也可以不要它<br>Reducers：不仅能够加工对象，也可以进行初始化</p>
+<p>如果比作一家餐厅的话，React Components是顾客，Store是老板，Action Creators是服务员，Reducers是后厨团队。</p>
+<p>#Redux三个核心概念<br>##一、action<br>1.动作的对象<br>2.包含两个属性<br>    type：标识属性，值为字符串，必要属性<br>    data：数据属性，值类型任意，可选属性<br>3.例子：{type:’ADD_STUDENT’,data:{name:’tom’,age:18}}</p>
+<p>##二、reducer<br>1.用于初始化状态、加工状态<br>2.加工时，根据旧的state和action，产生新的state的纯函数</p>
+<p>##三、store<br>1.将state、action、reducer联系在一起<br>2.如何得到此对象？<br>    (1)import {createStore} from ‘redux’<br>    (2)import reducer from ‘./reducers’<br>    (3)const store = createStore(reducer)<br>3.此对象的功能<br>    (1)getState():得到state<br>    (2)dispatch(action):分发action，触发reducer调用，产生新的state<br>    (3)subscribe(listener):注册监听，当产生了新的state时，自动调用</p>
+<p>#Redux三个API<br>##第一个API：getState</p>
+<p>##第二个API：dispatch<br>组件里要执行的函数需要去通知store自己要执行，这就需要用dispatch（注意要告诉自己的type和data）<br>##第三个API：subscribe<br>Redux里状态的改变不会引起页面更新，所以需要监测redux里状态的变化，而监测就需要用subscribe</p>
+<p>#Redux实际应用<br>App.jsx文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &#x27;react&#x27;</span><br><span class="line">import Count from &#x27;./Components/Count&#x27;</span><br><span class="line"></span><br><span class="line">export default class App extends Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;&lt;Count/&gt;&lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>index.js入口文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import React from &quot;react&quot;</span><br><span class="line">import ReactDOM from &quot;react-dom&quot;</span><br><span class="line">import App from &quot;./app&quot;</span><br><span class="line">import store from &quot;./redux/store&quot;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;App/&gt;,document.getElementById(&quot;root&quot;))</span><br><span class="line"></span><br><span class="line">store.subscribe(()=&gt;&#123;</span><br><span class="line">    ReactDOM.render(&lt;App/&gt;,document.getElementById(&quot;root&quot;))</span><br><span class="line">&#125;)</span><br><span class="line">//这样就不用在每个组件的componentDidMount() &#123;&#125;中都写</span><br></pre></td></tr></table></figure>
+
+
+<p>store.js文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//此文件专门用于暴露一个store对象</span><br><span class="line">import &#123;createStore&#125; from &#x27;redux&#x27;</span><br><span class="line">import countReducer from &#x27;./countReducer&#x27;</span><br><span class="line">export default createStore(countReducer)</span><br></pre></td></tr></table></figure>
+
+<p>count_reducer.js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> initState = <span class="number">0</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">countReducer</span>(<span class="params">preState=initState, action</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;type,data&#125; = action</span><br><span class="line">    <span class="keyword">switch</span>(type)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;increment&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState + data</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;decrement&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState - data</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> preState</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>组件中的count.js文件<br>(这里隐藏着一个小问题哦<del>……</del>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import React,&#123; Component&#125; from &#x27;react&#x27;</span><br><span class="line">import store from &#x27;../../redux/store&#x27;</span><br><span class="line"></span><br><span class="line">export default class Count extends Component &#123;</span><br><span class="line">    increment=()=&gt;&#123;</span><br><span class="line">        const &#123;value&#125; = this.selectNumber</span><br><span class="line">        store.dispatch(&#123;type:&#x27;increment&#x27;,data:value*1&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    decrement=()=&gt;&#123;</span><br><span class="line">        const &#123;value&#125; = this.selectNumber</span><br><span class="line">        store.dispatch(&#123;type:&#x27;decrement&#x27;,data:value*1&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;h1&gt;当前求和为：&#123;store.getState()&#125;&lt;/h1&gt;</span><br><span class="line">                &lt;select ref=&#123;c =&gt; this.selectNumber = c&#125;&gt;</span><br><span class="line">                    &lt;option value=&quot;1&quot;&gt;1&lt;/option&gt;</span><br><span class="line">                    &lt;option value=&quot;2&quot;&gt;2&lt;/option&gt;</span><br><span class="line">                    &lt;option value=&quot;3&quot;&gt;3&lt;/option&gt;</span><br><span class="line">                &lt;/select&gt;&amp;nbsp;</span><br><span class="line">                &lt;button onClick=&#123;this.increment&#125;&gt;+&lt;/button&gt;&amp;nbsp;</span><br><span class="line">                &lt;button onClick=&#123;this.decrement&#125;&gt;-&lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
