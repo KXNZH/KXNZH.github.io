@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,6 +145,88 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/17/ahooks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/17/ahooks/" class="post-title-link" itemprop="url">ahooks————一个好用的hooks组件库</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-09-17 09:40:17 / Modified: 11:31:08" itemprop="dateCreated datePublished" datetime="2022-09-17T09:40:17+08:00">2022-09-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[toc]</p>
+<h3 id="一、ahooks简介"><a href="#一、ahooks简介" class="headerlink" title="一、ahooks简介"></a>一、ahooks简介</h3><p>ahooks是由蚂蚁 umi 团队、淘系 ice 团队以及阿里体育团队共同建设的 React Hooks 工具库。<br>它正致力成为和 antd/fusion 一样的 React 基础设施，帮助开发者在逻辑层面省去大量的重复工作。</p>
+<h3 id="二、核心useRequest的基础用法"><a href="#二、核心useRequest的基础用法" class="headerlink" title="二、核心useRequest的基础用法"></a>二、核心useRequest的基础用法</h3><p>默认请求<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const &#123; data, error, loading &#125; = useRequest(service);</span><br></pre></td></tr></table></figure><br>    第一个参数是一个异步函数，在组件初始化时，会自动执行该异步函数。同时自动管理该异步函数的 loading , data , error 等状态。</p>
+<p>手动触发<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const &#123; loading, run, runAsync &#125; = useRequest(service, &#123;</span><br><span class="line">    manual: true</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&lt;button onClick=&#123;run&#125; disabled=&#123;loading&#125;&gt;</span><br><span class="line">    &#123;loading ? &#x27;Loading&#x27; : &#x27;Edit&#x27;&#125;</span><br><span class="line">&lt;/button&gt;</span><br></pre></td></tr></table></figure><br>    设置了 options.manual = true，则 useRequest 不会默认执行，需要通过 run 或者 runAsync 来触发执行。</p>
+<pre><code>Q:run 与 runAsync 的区别
+</code></pre>
+<p>生命周期<br>    在异步函数的不同阶段做一些处理<br>    <ul><br>    <li>onBefore：请求之前触发</li><br>    <li>onSuccess：请求成功触发</li><br>    <li>onError：请求失败触发</li><br>    <li>onFinally：请求完成触发</li><br>    </ul></p>
+<p>刷新<br>    使用refresh代替run<br>    refresh 与 refreshAsync 的区别与run一致</p>
+<p>立即变更数据<br>    mutate支持立即修改返回的数据，用法与setState一致</p>
+<p>取消响应<br>    cancel函数用于忽略当前promise返回的数据和错误<br>    注意：调用cancel函数并不会取消promise的执行</p>
+<h3 id="三、useRequest的具体应用"><a href="#三、useRequest的具体应用" class="headerlink" title="三、useRequest的具体应用"></a>三、useRequest的具体应用</h3><p>1、Loading Delay<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const &#123; loading, data &#125; = useRequest(getUsername, &#123;</span><br><span class="line">    loadingDelay: 300</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">return &lt;div&gt;&#123; loading ? &#x27;Loading...&#x27; : data &#125;&lt;/div&gt;</span><br></pre></td></tr></table></figure><br>    若在300ms内展示，则不显示loading···</p>
+<p>2、轮询<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const &#123; data, run, cancel &#125; = useRequest(getUsername, &#123;</span><br><span class="line">    pollingInterval: 3000,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>    每隔3000ms自动请求一次getUsername<br>    可通过cancel停止、run启动</p>
+<p>3、ready<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const [ready, &#123; toggle &#125;] = useToggle(false);</span><br><span class="line"></span><br><span class="line">const &#123; data, loading &#125; = useRequest(getUsername, &#123;</span><br><span class="line">    ready,</span><br><span class="line">    //manual: true 手动模式</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>    只有当ready为 true 时，才会执行</p>
+<p>4、依赖刷新<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const [userId, setUserId] = useState(&#x27;1&#x27;);</span><br><span class="line"></span><br><span class="line">const &#123; data, run &#125; = useRequest(() =&gt; getUserSchool(userId), &#123;</span><br><span class="line">    refreshDeps: [userId],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const &#123; data, refresh &#125; = useRequest(() =&gt; getUserSchool(userId));</span><br><span class="line"></span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    refresh();</span><br><span class="line">&#125;, [userId]);</span><br></pre></td></tr></table></figure><br>    切换userId后立即刷新</p>
+<p>5、屏幕聚焦重新请求<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const &#123; data &#125; = useRequest(getUsername, &#123;</span><br><span class="line">    refreshOnWindowFocus: true,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>    再次进入当前页面，如果和上一次请求间隔大于 5000ms 则会重新请求一次</p>
+<p>6、防抖<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const &#123; data, run &#125; = useRequest(getUsername, &#123;</span><br><span class="line">    debounceWait: 300,</span><br><span class="line">    manual: true</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>    频繁触发run，只会在最后一次触发结束后等待 300ms 执行。</p>
+<p>7、节流<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const &#123; data, run &#125; = useRequest(getUsername, &#123;</span><br><span class="line">    throttleWait: 300,</span><br><span class="line">    manual: true</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>    频繁触发run，只会每隔 300ms 执行一次。</p>
+<p>8、缓存<br>    cacheKey：将当前请求成功的数据缓存起来。<br>    staleTime： 设置数据保持新鲜时间，在该时间内不会重新发起请求。<br>    cacheTime： 设置数据缓存时间，超过该时间自动清空该条缓存数据。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -267,10 +349,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-03-12 00:00:00 / Modified: 10:03:57" itemprop="dateCreated datePublished" datetime="2022-03-12T00:00:00+08:00">2022-03-12</time>
+      <time title="Created: 2022-03-12 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-12T00:00:00+08:00">2022-03-12</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-09-17 11:32:02" itemprop="dateModified" datetime="2022-09-17T11:32:02+08:00">2022-09-17</time>
+      </span>
 
   
 </div>
@@ -282,8 +370,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><strong>Tab标签页</strong></p>
-<p><img src="https://s2.loli.net/2022/03/12/sytN2GhKqn5WlXH.png" alt="image.png"><br>大致就是这种效果<br>最开始尝试过去找原生的成型代码，但是因为插件一系列问题没有成功，于是开始自己写……</p>
+          <p>[toc]</p>
+<h3 id="Tab标签页"><a href="#Tab标签页" class="headerlink" title="Tab标签页"></a><strong>Tab标签页</strong></h3><p><img src="https://s2.loli.net/2022/03/12/sytN2GhKqn5WlXH.png" alt="image.png"><br>大致就是这种效果<br>最开始尝试过去找原生的成型代码，但是因为插件一系列问题没有成功，于是开始自己写……</p>
 <pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">state = &#123;</span><br><span class="line">    currentBoxId: &#x27;stepone&#x27; //当前显示的View的id</span><br><span class="line">    &#125;</span><br><span class="line">    changeBox(e) &#123;</span><br><span class="line">    let currentFlag = e.currentTarget.id;</span><br><span class="line">    switch (currentFlag) &#123;</span><br><span class="line">        case &#x27;steponeNext&#x27;:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            currentBoxId: &#x27;stepone&#x27;</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">        case &#x27;steptwoNext&#x27;:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            currentBoxId: &#x27;steptwo&#x27;</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">        case &#x27;stepthreeNext&#x27;:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            currentBoxId: &#x27;stepthree&#x27;</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">        case &#x27;stepfourNext&#x27;:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            currentBoxId: &#x27;stepfour&#x27;</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </code></pre>
 <p>正文部分<br><img src="https://s2.loli.net/2022/03/12/hpOvTmPRjJNc7nQ.png" alt="image.png"></p>
@@ -291,8 +379,7 @@
 <p>好的，让我们看看上一步下一步的写法</p>
 <p><img src="https://s2.loli.net/2022/03/12/9i1A3dhjQ5UkRLW.png" alt="image.png"></p>
 <p>原理大致都是一样的，当点击不同的按钮，改变状态，跳转到不同的地方</p>
-<p><strong>Select选择框</strong></p>
-<p><img src="https://s2.loli.net/2022/03/12/k8L2uF7o4VBcYgU.png" alt="image.png"><br>html中有select写法，可以直接写出来下拉选择框。小程序原生虽然有Picker写法，但是效果不是这样的。</p>
+<h3 id="Select选择框"><a href="#Select选择框" class="headerlink" title="Select选择框"></a><strong>Select选择框</strong></h3><p><img src="https://s2.loli.net/2022/03/12/k8L2uF7o4VBcYgU.png" alt="image.png"><br>html中有select写法，可以直接写出来下拉选择框。小程序原生虽然有Picker写法，但是效果不是这样的。</p>
 <p>正文部分<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;View className=&#x27;picker&#x27;&gt;</span><br><span class="line">    &lt;View className=&#x27;select teshu&#x27; onClick=&#123;this.openone.bind(this)&#125;&gt;</span><br><span class="line">        &lt;Text&gt;时长&lt;/Text&gt;</span><br><span class="line">        &lt;Image src=&#x27;../images/down.png&#x27; alt=&#x27;&#x27;&gt;&lt;/Image&gt;</span><br><span class="line">        &lt;View className=&#123;this.state.show? &quot;show&quot; : &quot;hidden&quot;&#125;&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;2-4h&lt;/View&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;半天&lt;/View&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;全天&lt;/View&gt;</span><br><span class="line">        &lt;/View&gt;</span><br><span class="line">    &lt;/View&gt;</span><br><span class="line">    &lt;View className=&#x27;select teshu&#x27; onClick=&#123;this.opentwo.bind(this)&#125;&gt;</span><br><span class="line">        &lt;Text&gt;难度&lt;/Text&gt;</span><br><span class="line">        &lt;Image src=&#x27;../images/down.png&#x27; alt=&#x27;&#x27;&gt;&lt;/Image&gt;</span><br><span class="line">        &lt;View className=&#123;this.state.modal? &quot;show&quot; : &quot;hidden&quot;&#125;&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;简单&lt;/View&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;中等&lt;/View&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;困难&lt;/View&gt;</span><br><span class="line">        &lt;/View&gt;</span><br><span class="line">    &lt;/View&gt;</span><br><span class="line">    &lt;View className=&#x27;select teshu&#x27; onClick=&#123;this.openthree.bind(this)&#125;&gt;</span><br><span class="line">        &lt;Text&gt;人数&lt;/Text&gt;</span><br><span class="line">        &lt;Image src=&#x27;../images/down.png&#x27; alt=&#x27;&#x27;&gt;&lt;/Image&gt;</span><br><span class="line">        &lt;View className=&#123;this.state.showmodal? &quot;show&quot; : &quot;hidden&quot;&#125;&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;4&lt;/View&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;6&lt;/View&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;8&lt;/View&gt;</span><br><span class="line">            &lt;View&gt;&amp;nbsp;&amp;nbsp;10&lt;/View&gt;</span><br><span class="line">        &lt;/View&gt;</span><br><span class="line">    &lt;/View&gt;   </span><br><span class="line">&lt;/View&gt;</span><br></pre></td></tr></table></figure></p>
 <p>渲染部分<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">state = &#123; show: false , modal: false , showmodal: false&#125;</span><br><span class="line"></span><br><span class="line">componentWillMount() &#123; &#125;</span><br><span class="line"></span><br><span class="line">componentDidMount() &#123; &#125;</span><br><span class="line"></span><br><span class="line">componentWillUnmount() &#123; &#125;</span><br><span class="line"></span><br><span class="line">componentDidShow() &#123; &#125;</span><br><span class="line"></span><br><span class="line">componentDidHide() &#123; &#125;</span><br><span class="line"></span><br><span class="line">openone () &#123;</span><br><span class="line">    const &#123;show&#125; = this.state</span><br><span class="line">    switch (show) &#123;</span><br><span class="line">        case false:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            show: true</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">        case true:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            show: false</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">opentwo () &#123;</span><br><span class="line">    const &#123;modal&#125; = this.state</span><br><span class="line">    switch (modal) &#123;</span><br><span class="line">        case false:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            modal: true</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">        case true:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            modal: false</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">openthree () &#123;</span><br><span class="line">    const &#123;showmodal&#125; = this.state</span><br><span class="line">    switch (showmodal) &#123;</span><br><span class="line">        case false:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            showmodal: true</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">        case true:</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            showmodal: false</span><br><span class="line">        &#125;)</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>css部分<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">.picker &#123;</span><br><span class="line">    display: flex;</span><br><span class="line">&#125;</span><br><span class="line">.select &#123;</span><br><span class="line">    width: 200px;</span><br><span class="line">    height: 60px;</span><br><span class="line">    line-height: 60px;</span><br><span class="line">    background-color: #fff;</span><br><span class="line">    margin-left: 20px;</span><br><span class="line">    padding-left: 7px;</span><br><span class="line">&#125;</span><br><span class="line">.teshu &#123;</span><br><span class="line">    position: relative;</span><br><span class="line">&#125;</span><br><span class="line">.select Image &#123;</span><br><span class="line">    float: right;</span><br><span class="line">    margin-top: 7px;</span><br><span class="line">    width: 50px;</span><br><span class="line">    height: 50px;</span><br><span class="line">&#125;</span><br><span class="line">.show &#123;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 60px;</span><br><span class="line">    left: 0;</span><br><span class="line">    width: 200px;</span><br><span class="line">    box-shadow: 0 2px 10px rgba(0, 0, 0,0.1);</span><br><span class="line">&#125;</span><br><span class="line">.show View &#123;</span><br><span class="line">    background-color: #fff;</span><br><span class="line">&#125;</span><br><span class="line">.hidden &#123;</span><br><span class="line">    display: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>用了showmodal的方法，用的时候显示，不用的时候隐藏（这种方法也可以使用在弹窗之类的地方）</p>
