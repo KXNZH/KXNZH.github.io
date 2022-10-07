@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="图片合成实例（国庆头像H5）1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950function drawCanvasImage() &amp;#123;    let width &#x3D; 500    let height &#x3D; 500    downloadRef.current">
+<meta property="og:type" content="article">
+<meta property="og:title" content="canvas图片合成">
+<meta property="og:url" content="http://example.com/2022/10/06/%E5%9B%BE%E7%89%87%E5%90%88%E6%88%90/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="图片合成实例（国庆头像H5）1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950function drawCanvasImage() &amp;#123;    let width &#x3D; 500    let height &#x3D; 500    downloadRef.current">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-06T13:09:17.680Z">
+<meta property="article:modified_time" content="2022-10-07T13:23:29.414Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/10/06/%E5%9B%BE%E7%89%87%E5%90%88%E6%88%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/06/%E5%9B%BE%E7%89%87%E5%90%88%E6%88%90/","path":"2022/10/06/图片合成/","title":"canvas图片合成"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>canvas图片合成 | Hexo</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%90%88%E6%88%90%E5%AE%9E%E4%BE%8B%EF%BC%88%E5%9B%BD%E5%BA%86%E5%A4%B4%E5%83%8FH5%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">图片合成实例（国庆头像H5）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useRef"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">useRef()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toDataURL"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">toDataURL()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a%E6%A0%87%E7%AD%BE%E6%B3%95%E6%9C%AC%E5%9C%B0%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">a标签法本地下载图片</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/06/%E5%9B%BE%E7%89%87%E5%90%88%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          canvas图片合成
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-06 21:09:17" itemprop="dateCreated datePublished" datetime="2022-10-06T21:09:17+08:00">2022-10-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-10-07 21:23:29" itemprop="dateModified" datetime="2022-10-07T21:23:29+08:00">2022-10-07</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="图片合成实例（国庆头像H5）"><a href="#图片合成实例（国庆头像H5）" class="headerlink" title="图片合成实例（国庆头像H5）"></a>图片合成实例（国庆头像H5）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">function drawCanvasImage() &#123;</span><br><span class="line">    let width = 500</span><br><span class="line">    let height = 500</span><br><span class="line">    downloadRef.current.width = width</span><br><span class="line">    downloadRef.current.height = height</span><br><span class="line">    let myimage = new Image() //创建图片对象</span><br><span class="line">    if(!imgURL)&#123;</span><br><span class="line">        alert(&#x27;请选择图片&#x27;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    myimage.src = imgURL //设置绘制图像路径</span><br><span class="line">    let background = new Image()</span><br><span class="line">    if(!kuang)&#123;</span><br><span class="line">        alert(&#x27;请选择头像框&#x27;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    background.setAttribute(&quot;crossOrigin&quot;,&#x27;Anonymous&#x27;)//解决跨域问题，画布污染问题</span><br><span class="line">    background.src = kuang</span><br><span class="line">    if(downloadRef.current.getContext)&#123;</span><br><span class="line">        let ctx = downloadRef.current.getContext(&#x27;2d&#x27;)//获取绘图2D环境</span><br><span class="line">        myimage.onload = function()&#123;//图片加载完再去控制</span><br><span class="line">            ctx.drawImage(myimage,0,0,width,height)//在画布上根据坐标绘制</span><br><span class="line">            background.onload = function() &#123;</span><br><span class="line">                ctx.drawImage(background,0,0,width,height)</span><br><span class="line">                downloadImage()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const downloadImage = ()=&gt;&#123;</span><br><span class="line">    if(window.innerWidth &lt; 1000 ) &#123;</span><br><span class="line">        const url = downloadRef.current.toDataURL()</span><br><span class="line">        setDownloadURL(url)</span><br><span class="line">        setIsDownload(true)</span><br><span class="line">        setIsTip(true)</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">            setIsTip(false);</span><br><span class="line">          &#125;, 3000);</span><br><span class="line">        setIsChoose(false)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        const url = downloadRef.current.toDataURL();</span><br><span class="line">        const a = document.createElement(&quot;a&quot;); // 生成一个a元素</span><br><span class="line">        const event = new MouseEvent(&quot;click&quot;); // 创建一个单击事件</span><br><span class="line">        a.download = name || &quot;avatar&quot;; // 设置图片名称</span><br><span class="line">        a.href = url; // 将生成的URL设置为a.href属性</span><br><span class="line">        a.dispatchEvent(event); // 触发a的单击事件</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas ref=&#123;downloadRef&#125; id=&#x27;canvas&#x27;&gt;&lt;/canvas&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="useRef"><a href="#useRef" class="headerlink" title="useRef()"></a>useRef()</h4><p>1、返回一个可变的 ref 对象，该对象只有个 current 属性，初始值为传入的参数( initialValue )。<br>2、返回的 ref 对象在组件的整个生命周期内保持不变<br>3、当更新 current 值时并不会重新渲染，这是与 useState 不同的地方</p>
+<p>※使用useRef可以保证实时获取到最新的值</p>
+<h4 id="toDataURL"><a href="#toDataURL" class="headerlink" title="toDataURL()"></a>toDataURL()</h4><p>1、toDataURL()方法是什么？</p>
+<p>toDataURL()是canvas对象的一种方法，用于将canvas对象转换为base64位编码；</p>
+<p>2、利用canvas的toDataURL()方法如何将图片转换为base64编码？</p>
+<p>通过将图片绘制到canvas中，然后将canvas对象转换为base64编码，从而实现图片转为base64编码；</p>
+<p>3、将图片转换为base64位编码有什么好处？</p>
+<p>1）将图片转换为base64位编码后，图片会跟随代码（html、css、js）一起请求加载，不会再单独进行请求加载；</p>
+<p>2）可以防止由于图片路径错误导致图片加载失败的问题；</p>
+<p>4、toDataURL()方法的两个参数：toDataURL(type, encoderOptions)</p>
+<p>1）type指定转换为base64编码后图片的格式，如：image/png、image/jpeg、image/webp等等，默认为image/png格式；</p>
+<p>2）encoderOptions用于设置转换为base64编码后图片的质量，取值范围为0-1，超出取值范围用默认值0.92代替；</p>
+<h4 id="a标签法本地下载图片"><a href="#a标签法本地下载图片" class="headerlink" title="a标签法本地下载图片"></a>a标签法本地下载图片</h4><p>步骤：<br>1、将 canvas 元素的数据通过原生 api 转换成 base64 编码的图片格式<br>2、利用 a 标签设置 download 属性可以将 href 链接元素下载，我们将 a 标签的 href 属性值设置为上一步获得的 base64 格式字符串<br>3、构造一个单击事件并通过 api 触发 a 标签的 click 事件完成下载</p>
+<p>优缺点：<br>优点：只使用浏览器提供的原生 API 就能实现我们的需求。<br>缺点：<br>    1）无法被异步代码包裹，也就是包含 Ajax 请求的情况下代码不生效。<br>    2）对于分辨率过高的 canvas, 我们生成的 dataURL 过长，超过浏览器限制，可能会导致无法顺利下载。</p>
+<p>解决办法：可采用blob方法，感兴趣可以百度学习一下^_^</p>
+<p>###canvas补充<br>详细学习canvas可参考<a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/html5-canvas-intro.html">https://www.runoob.com/w3cnote/html5-canvas-intro.html</a><br>学习2d上下文可参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41218152/article/details/82664178">https://blog.csdn.net/qq_41218152/article/details/82664178</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/17/ahooks/" rel="prev" title="ahooks——一个好用的hooks组件库">
+                  <i class="fa fa-chevron-left"></i> ahooks——一个好用的hooks组件库
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

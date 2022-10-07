@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -154,6 +154,95 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/06/%E5%9B%BE%E7%89%87%E5%90%88%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/10/06/%E5%9B%BE%E7%89%87%E5%90%88%E6%88%90/" class="post-title-link" itemprop="url">canvas图片合成</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-06 21:09:17" itemprop="dateCreated datePublished" datetime="2022-10-06T21:09:17+08:00">2022-10-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-10-07 21:23:29" itemprop="dateModified" datetime="2022-10-07T21:23:29+08:00">2022-10-07</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="图片合成实例（国庆头像H5）"><a href="#图片合成实例（国庆头像H5）" class="headerlink" title="图片合成实例（国庆头像H5）"></a>图片合成实例（国庆头像H5）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">function drawCanvasImage() &#123;</span><br><span class="line">    let width = 500</span><br><span class="line">    let height = 500</span><br><span class="line">    downloadRef.current.width = width</span><br><span class="line">    downloadRef.current.height = height</span><br><span class="line">    let myimage = new Image() //创建图片对象</span><br><span class="line">    if(!imgURL)&#123;</span><br><span class="line">        alert(&#x27;请选择图片&#x27;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    myimage.src = imgURL //设置绘制图像路径</span><br><span class="line">    let background = new Image()</span><br><span class="line">    if(!kuang)&#123;</span><br><span class="line">        alert(&#x27;请选择头像框&#x27;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    background.setAttribute(&quot;crossOrigin&quot;,&#x27;Anonymous&#x27;)//解决跨域问题，画布污染问题</span><br><span class="line">    background.src = kuang</span><br><span class="line">    if(downloadRef.current.getContext)&#123;</span><br><span class="line">        let ctx = downloadRef.current.getContext(&#x27;2d&#x27;)//获取绘图2D环境</span><br><span class="line">        myimage.onload = function()&#123;//图片加载完再去控制</span><br><span class="line">            ctx.drawImage(myimage,0,0,width,height)//在画布上根据坐标绘制</span><br><span class="line">            background.onload = function() &#123;</span><br><span class="line">                ctx.drawImage(background,0,0,width,height)</span><br><span class="line">                downloadImage()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const downloadImage = ()=&gt;&#123;</span><br><span class="line">    if(window.innerWidth &lt; 1000 ) &#123;</span><br><span class="line">        const url = downloadRef.current.toDataURL()</span><br><span class="line">        setDownloadURL(url)</span><br><span class="line">        setIsDownload(true)</span><br><span class="line">        setIsTip(true)</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">            setIsTip(false);</span><br><span class="line">          &#125;, 3000);</span><br><span class="line">        setIsChoose(false)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        const url = downloadRef.current.toDataURL();</span><br><span class="line">        const a = document.createElement(&quot;a&quot;); // 生成一个a元素</span><br><span class="line">        const event = new MouseEvent(&quot;click&quot;); // 创建一个单击事件</span><br><span class="line">        a.download = name || &quot;avatar&quot;; // 设置图片名称</span><br><span class="line">        a.href = url; // 将生成的URL设置为a.href属性</span><br><span class="line">        a.dispatchEvent(event); // 触发a的单击事件</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas ref=&#123;downloadRef&#125; id=&#x27;canvas&#x27;&gt;&lt;/canvas&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="useRef"><a href="#useRef" class="headerlink" title="useRef()"></a>useRef()</h4><p>1、返回一个可变的 ref 对象，该对象只有个 current 属性，初始值为传入的参数( initialValue )。<br>2、返回的 ref 对象在组件的整个生命周期内保持不变<br>3、当更新 current 值时并不会重新渲染，这是与 useState 不同的地方</p>
+<p>※使用useRef可以保证实时获取到最新的值</p>
+<h4 id="toDataURL"><a href="#toDataURL" class="headerlink" title="toDataURL()"></a>toDataURL()</h4><p>1、toDataURL()方法是什么？</p>
+<p>toDataURL()是canvas对象的一种方法，用于将canvas对象转换为base64位编码；</p>
+<p>2、利用canvas的toDataURL()方法如何将图片转换为base64编码？</p>
+<p>通过将图片绘制到canvas中，然后将canvas对象转换为base64编码，从而实现图片转为base64编码；</p>
+<p>3、将图片转换为base64位编码有什么好处？</p>
+<p>1）将图片转换为base64位编码后，图片会跟随代码（html、css、js）一起请求加载，不会再单独进行请求加载；</p>
+<p>2）可以防止由于图片路径错误导致图片加载失败的问题；</p>
+<p>4、toDataURL()方法的两个参数：toDataURL(type, encoderOptions)</p>
+<p>1）type指定转换为base64编码后图片的格式，如：image/png、image/jpeg、image/webp等等，默认为image/png格式；</p>
+<p>2）encoderOptions用于设置转换为base64编码后图片的质量，取值范围为0-1，超出取值范围用默认值0.92代替；</p>
+<h4 id="a标签法本地下载图片"><a href="#a标签法本地下载图片" class="headerlink" title="a标签法本地下载图片"></a>a标签法本地下载图片</h4><p>步骤：<br>1、将 canvas 元素的数据通过原生 api 转换成 base64 编码的图片格式<br>2、利用 a 标签设置 download 属性可以将 href 链接元素下载，我们将 a 标签的 href 属性值设置为上一步获得的 base64 格式字符串<br>3、构造一个单击事件并通过 api 触发 a 标签的 click 事件完成下载</p>
+<p>优缺点：<br>优点：只使用浏览器提供的原生 API 就能实现我们的需求。<br>缺点：<br>    1）无法被异步代码包裹，也就是包含 Ajax 请求的情况下代码不生效。<br>    2）对于分辨率过高的 canvas, 我们生成的 dataURL 过长，超过浏览器限制，可能会导致无法顺利下载。</p>
+<p>解决办法：可采用blob方法，感兴趣可以百度学习一下^_^</p>
+<p>###canvas补充<br>详细学习canvas可参考<a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/html5-canvas-intro.html">https://www.runoob.com/w3cnote/html5-canvas-intro.html</a><br>学习2d上下文可参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41218152/article/details/82664178">https://blog.csdn.net/qq_41218152/article/details/82664178</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/17/ahooks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,10 +266,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-09-17 09:40:17 / Modified: 11:41:46" itemprop="dateCreated datePublished" datetime="2022-09-17T09:40:17+08:00">2022-09-17</time>
+      <time title="Created: 2022-09-17 09:40:17" itemprop="dateCreated datePublished" datetime="2022-09-17T09:40:17+08:00">2022-09-17</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-10-06 21:10:00" itemprop="dateModified" datetime="2022-10-06T21:10:00+08:00">2022-10-06</time>
+      </span>
 
   
 </div>
@@ -192,8 +287,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>[toc]</p>
-<h3 id="ahooks简介"><a href="#ahooks简介" class="headerlink" title="ahooks简介"></a>ahooks简介</h3><p>ahooks是由蚂蚁 umi 团队、淘系 ice 团队以及阿里体育团队共同建设的 React Hooks 工具库。<br>它正致力成为和 antd/fusion 一样的 React 基础设施，帮助开发者在逻辑层面省去大量的重复工作。</p>
+          <h3 id="ahooks简介"><a href="#ahooks简介" class="headerlink" title="ahooks简介"></a>ahooks简介</h3><p>ahooks是由蚂蚁 umi 团队、淘系 ice 团队以及阿里体育团队共同建设的 React Hooks 工具库。<br>它正致力成为和 antd/fusion 一样的 React 基础设施，帮助开发者在逻辑层面省去大量的重复工作。</p>
 <h3 id="核心useRequest的基础用法"><a href="#核心useRequest的基础用法" class="headerlink" title="核心useRequest的基础用法"></a>核心useRequest的基础用法</h3><p>默认请求<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const &#123; data, error, loading &#125; = useRequest(service);</span><br></pre></td></tr></table></figure><br>    第一个参数是一个异步函数，在组件初始化时，会自动执行该异步函数。同时自动管理该异步函数的 loading , data , error 等状态。</p>
 <p>手动触发<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const &#123; loading, run, runAsync &#125; = useRequest(service, &#123;</span><br><span class="line">    manual: true</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&lt;button onClick=&#123;run&#125; disabled=&#123;loading&#125;&gt;</span><br><span class="line">    &#123;loading ? &#x27;Loading&#x27; : &#x27;Edit&#x27;&#125;</span><br><span class="line">&lt;/button&gt;</span><br></pre></td></tr></table></figure><br>    设置了 options.manual = true，则 useRequest 不会默认执行，需要通过 run 或者 runAsync 来触发执行。</p>
 <pre><code>Q:run 与 runAsync 的区别
