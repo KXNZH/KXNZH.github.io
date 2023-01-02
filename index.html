@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,6 +145,133 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/01/react%E7%9B%B8%E5%85%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/01/react%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">react相关</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-01 18:08:01" itemprop="dateCreated datePublished" datetime="2023-01-01T18:08:01+08:00">2023-01-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-01-02 14:41:17" itemprop="dateModified" datetime="2023-01-02T14:41:17+08:00">2023-01-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p><img src="https://s2.loli.net/2023/01/02/VZnG6BWtjdyLSAb.png" alt="X98__G_4L_~_VZ36_TXHEAG.png"><br>上半部分视图渲染，下半部分事件通知<br>第一阶段：加载阶段<br>先是初始化数据constructor<br>然后进行页面初次渲染render<br>最后完成加载后发布did mount通知</p>
+<p>第二阶段：更新阶段<br>先是更新数据渲染一次render<br>然后每更新一次每发布一次did update通知</p>
+<p>第三阶段：卸载阶段<br>在组件卸载之前进行will unmount通知</p>
+<p>具体运用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">constructor() &#123;</span><br><span class="line">    super(...arguments);</span><br><span class="line">    this.state = &#123;</span><br><span class="line">        user: [],</span><br><span class="line">        tempavatar: &#x27;&#x27;,</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">componentDidMount() &#123;</span><br><span class="line">    Fetch(&#x27;/money/my/message&#x27;, &#123;&#125;, &#x27;GET&#x27;)</span><br><span class="line">    .then(res =&gt; &#123;</span><br><span class="line">        console.log(res.data);</span><br><span class="line">        if (res.data) &#123;</span><br><span class="line">            this.setState(&#123; </span><br><span class="line">                user: res.data,</span><br><span class="line">                nickname: res.data.Nickname</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在写接口时经常需要在页面加载时就获取数据，这是需要把接口写在componentDidMount() {}中</p>
+<h3 id="state更新"><a href="#state更新" class="headerlink" title="state更新"></a>state更新</h3><p>关于state，官方文档中写道“关于setState()你应该了解的三件事”：</p>
+<p>（1）不要直接修改state<br>（2）state的更新可能是异步的<br>（3）state的更新会被合并</p>
+<p>那么怎么理解这些？</p>
+<h4 id="（1）-this-state-value-1-这种写法是错误的"><a href="#（1）-this-state-value-1-这种写法是错误的" class="headerlink" title="（1） this.state.value = 1 这种写法是错误的"></a>（1） this.state.value = 1 这种写法是错误的</h4><p>绝对不要直接修改 this.state ，这不仅是一种低效的做法，而且很有可能会被之后的操作替换。</p>
+<h4 id="（2）异步是指进程不需要一直等下去，而是继续执行下面的操作，不管其他进程的状态。当有消息返回时系统会通知进程进行处理，这样可以提高执行的效率。"><a href="#（2）异步是指进程不需要一直等下去，而是继续执行下面的操作，不管其他进程的状态。当有消息返回时系统会通知进程进行处理，这样可以提高执行的效率。" class="headerlink" title="（2）异步是指进程不需要一直等下去，而是继续执行下面的操作，不管其他进程的状态。当有消息返回时系统会通知进程进行处理，这样可以提高执行的效率。"></a>（2）异步是指进程不需要一直等下去，而是继续执行下面的操作，不管其他进程的状态。当有消息返回时系统会通知进程进行处理，这样可以提高执行的效率。</h4><p>异步就相当于当客户端发送给服务端请求时，在等待服务端响应的时候，客户端可以做其他的事情，这样节约了时间，提高了效率。</p>
+<p>注：异步虽然好，但是有些问题是要用同步用来解决，比如有些东西我们需要的是拿到返回的数据在进行操作的。这些是异步所无法解决的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">changeText() &#123;</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">        message: &quot;新年快乐&quot;</span><br><span class="line">    &#125;)</span><br><span class="line">    console.log(this.state.message); // Hello World</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由此可见setState是异步的操作，我们并不能在执行完setState之后立马拿到最新的state的结果</p>
+<p>Q:为什么要设计成异步？</p>
+<pre><code>setState设计为异步，可以显著的提升性能；
+
+如果每次调用 setState都进行一次更新，那么意味着render函数会被频繁调用，界面重新渲染，这样效率是很低的；
+
+最好的办法应该是获取到多个更新，之后进行批量更新；
+
+如果同步更新了state，但是还没有执行render函数，那么state和props不能保持同步；
+
+state和props不能保持一致性，会在开发中产生很多的问题；
+</code></pre>
+<p>Q:如何获取异步的结果,如何获取到更新后的值？</p>
+<pre><code>方式一：setState的回调
+
+setState接受两个参数：第二个参数是一个回调函数，这个回调函数会在更新后会执行；
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;</span><br><span class="line">    message: &quot;新年快乐&quot;</span><br><span class="line">&#125;, () =&gt; &#123;</span><br><span class="line">    console.log(this.state.message);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+方式二：在生命周期函数内获取
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">componentDidUpdate() &#123;</span><br><span class="line">    console.log(this.state.message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p>Q:setState一定是异步吗？</p>
+<p>其实分成两种情况：</p>
+<p>1、在组件生命周期或React合成事件中，setState是异步</p>
+<p>2、在setTimeout或者原生dom事件中，setState是同步</p>
+<p>验证一：在setTimeout中的更新：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">changeText() &#123;</span><br><span class="line">    // 将setState放入到定时器中</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">        message: &quot;新年快乐&quot;</span><br><span class="line">    &#125;)</span><br><span class="line">    console.log(this.state.message); // 新年快乐</span><br><span class="line">    &#125;, 0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>验证二：原生DOM事件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">    document.getElementById(&quot;btn&quot;).addEventListener(&quot;click&quot;, (e) =&gt; &#123;</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            message: &quot;新年快乐&quot;</span><br><span class="line">        &#125;)</span><br><span class="line">        console.log(this.state.message);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="（3）合并"><a href="#（3）合并" class="headerlink" title="（3）合并"></a>（3）合并</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function incrementMultiple() &#123;</span><br><span class="line">    this.setState(&#123;count: this.state.count + 1&#125;);</span><br><span class="line">    this.setState(&#123;count: this.state.count + 1&#125;);</span><br><span class="line">    this.setState(&#123;count: this.state.count + 1&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果this.state.count的值是1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;Age: &#x27;22&#x27;&#125;)</span><br><span class="line">this.setState(&#123;Name: &#x27;srtian&#x27;&#125;)</span><br><span class="line">// 等价于</span><br><span class="line">this.setState(&#123;Age: &#x27;22&#x27;, Name: &#x27;srtian&#125;)</span><br></pre></td></tr></table></figure>
+<p>会将数据进行合并，且通过setState对其中一个进行更新，另一个不受影响</p>
+<p>React的官方文档有提到过这么一句话：<br>    状态更新会合并（也就是说多次setstate函数调用产生的效果会合并）。</p>
+<p>原理：<br>在react中，setState通过一个队列机制实现state的更新。当执行setState时，会把需要更新的state合并后放入状态队列，而不会立刻更新this.state，当进入组件可更新状态时，这个队列机制就会高效的批量的更新state。</p>
+<h4 id="加深对state更新的理解：想想下面这段代码会输出什么？"><a href="#加深对state更新的理解：想想下面这段代码会输出什么？" class="headerlink" title="加深对state更新的理解：想想下面这段代码会输出什么？"></a>加深对state更新的理解：想想下面这段代码会输出什么？</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class Example extends React.Component&#123;</span><br><span class="line">    constructor()&#123;</span><br><span class="line">    super(...arguments)</span><br><span class="line">        this.state = &#123;</span><br><span class="line">            count: 0</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    componentDidMount()&#123;</span><br><span class="line">    // a</span><br><span class="line">    this.setState(&#123;count: this.state.count + 1&#125;);</span><br><span class="line">    console.log(&#x27;1:&#x27; + this.state.count)</span><br><span class="line">    // b</span><br><span class="line">    this.setState(&#123;count: this.state.count + 1&#125;);</span><br><span class="line">    console.log(&#x27;2:&#x27; + this.state.count)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        // c</span><br><span class="line">        this.setState(&#123;count: this.state.count + 1&#125;);</span><br><span class="line">        console.log(&#x27;3:&#x27; + this.state.count)</span><br><span class="line">    &#125;, 0)</span><br><span class="line">    // d</span><br><span class="line">    this.setState(preState =&gt; (&#123; count: preState.count + 1 &#125;), () =&gt; &#123;</span><br><span class="line">        console.log(&#x27;4:&#x27; + this.state.count)</span><br><span class="line">    &#125;)</span><br><span class="line">    console.log(&#x27;5:&#x27; + this.state.count)</span><br><span class="line">    // e</span><br><span class="line">    this.setState(preState =&gt; (&#123; count: preState.count + 1 &#125;))</span><br><span class="line">    console.log(&#x27;6:&#x27; + this.state.count)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/wuyxinu/article/details/113902057">https://blog.csdn.net/wuyxinu/article/details/113902057</a></p>
+<h3 id="React渲染"><a href="#React渲染" class="headerlink" title="React渲染"></a>React渲染</h3><p>1、HTML中渲染<br>2、参数方式渲染<br>3、function方式渲染<br>4、组件方式渲染（详细讲解）<br>举例说明：获取用户评论并渲染到页面<br>构造一个组件（写在Components文件夹中），用export default暴露出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">export default class Index extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        const &#123;id,time,content&#125;=this.props</span><br><span class="line">        return (</span><br><span class="line">            &lt;View className=&#x27;box_comment&#x27;&gt;</span><br><span class="line">                &lt;View className=&#x27;upper&#x27;&gt;</span><br><span class="line">                    &lt;View className=&#x27;xuehao&#x27;&gt;学号：&#123;id&#125;&lt;/View&gt;</span><br><span class="line">                    &lt;View className=&#x27;pushTime&#x27;&gt;&#123;time&#125; &lt;/View&gt;</span><br><span class="line">                &lt;/View&gt;</span><br><span class="line">                &lt;View className=&#x27;lower&#x27;&gt;&#123;content&#125;&lt;/View&gt;</span><br><span class="line">            &lt;/View&gt; </span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过Comment组件将获取到的评论渲染出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;View className=&#x27;h&#x27;&gt;精彩评论&lt;/View&gt;</span><br><span class="line">&#123;comments.map((comment) =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;Comment id=&#123;comment.ID&#125; time=&#123;comment.Givetime&#125; content=&#123;comment.Comment&#125; key=&#x27;comment&#x27; /&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;)&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39905409/article/details/104001438">https://blog.csdn.net/qq_39905409/article/details/104001438</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -721,7 +848,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
